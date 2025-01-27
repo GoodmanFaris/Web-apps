@@ -1,2 +1,2 @@
-# Web-apps
-Web apps made by Faris Lindov. Using Node js, PHP, HTML, CSS, JavaScript, ...
+# HR Managment web application
+Web apps made by Faris Lindov. Using Node js, EJS, PostgreSQL
