@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Human Resources Management</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light text-dark">
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="/">
+      <i class="bi bi-person-badge"></i> HR projekat
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/users/contact">Kontakt</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+      </ul>
+      <form class="d-flex" role="search">
+        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-light" type="submit">Pretraži</button>
+      </form>
+      <a id = "LogInBtn" class="btn btn-light ms-3">Log In</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Header Section -->
+<header class="py-5 bg-primary text-white">
+  <div class="container text-center">
+    <h1>Dobrodošli na HR projekat</h1>
+    <p class="lead">Upravljanje ljudskim resursima(projekat)</p>
+    <a id = "PocetakBtn" class="btn btn-outline-light btn-lg">Započni</a>
+  </div>
+</header>
+
+<!-- Main Content -->
+<main class="container my-5">
+  <div class="row text-center">
+    <div class="col-md-4 mb-4">
+      <i class="bi bi-person-fill h1 text-primary"></i>
+      <h3>Trazi Konkurs</h3>
+      <p>Pregledaj i apliciraj na konkurse.</p>
+    </div>
+    <div class="col-md-4 mb-4">
+      <i class="bi bi-briefcase-fill h1 text-primary"></i>
+      <h3>Uredi Profil</h3>
+      <p>Uredi svoj profil kako bi poboljšao šanse.</p>
+    </div>
+    <div class="col-md-4 mb-4">
+      <i class="bi bi-bar-chart-fill h1 text-primary"></i>
+      <h3>Informacije</h3>
+      <p>Dobijaš informacije o stanju na konkursima na kojima si prijavljen/na.</p>
+    </div>
+  </div>
+
+  <!-- Job Postings Section -->
+  <div class="container mt-4">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <label for="sortOptions" class="form-label">Sortiraj po:</label>
+        <select id="sortOptions" class="form-select mb-3">
+          <option value="" selected disabled>Izaberite opciju</option>
+          <option value="naziv_kompanije" onclick="Nk();">Nazivu kompanije</option>
+          <option value="datum_isteka" onclick="Di();">Datumu isteka</option>
+          <option value="broj_prijavljenih" onclick="Bpk();">Broj prijavljenih kandidata</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <section class="mt-5">
+    <h2 class="text-center mb-4">Konkursi</h2>
+    <div class="row">
+      <% if (konkursi && konkursi.length > 0) { %>
+        <% konkursi.forEach(konkurs => { %>
+          <div class="col-md-6 mb-3">
+            <div class="card shadow-sm border-0">
+              <div class="card-body">
+                <h5 class="card-title fw-bold text-primary"><%= konkurs.naziv %></h5>
+                <p class="mb-2 text-muted">
+                  <span class="fw-bold">Company:</span> <%= konkurs.naziv_kompanije %>
+                </p>
+                <p class="mb-2 text-muted">
+                  <span class="fw-bold">Job Type:</span> <%= konkurs.vrsta_posla %>
+                </p>
+                <p class="mb-2 text-muted">
+                  <span class="fw-bold">Expires On:</span> <%= new Date(konkurs.datum_isteka).toLocaleDateString() %>
+                </p>
+                <button
+                        class="btn btn-primary saznaj-vise-btn"
+                        data-url="/details/<%= konkurs.id %>">Saznaj više
+                </button>
+              </div>
+            </div>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <div class="col-12">
+          <p class="text-center">Nema konkursa trenutno.</p>
+        </div>
+      <% } %>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="Shadow" style="position: fixed; bottom: 0; left: 0; top: 0; right: 0; z-index: 500;
+    background-color: rgba(0, 0, 0, 0.8); display: none;">
+      <div class="container bg-white text-center" style="position: fixed; top: 20%; bottom: 20%; left: 6%;
+      z-index: 600; display: none;" id="PleaseLogin">
+        <button class="btn-close position-absolute" onclick="CloseMessage()"
+                aria-label="Close" style="top: 10px; right: 10px;"></button>
+        <h1 class="mt-5">Molim vas da se ulogujete</h1>
+        <br>
+        <br>
+        <a type="button" href = "/users/login" class="btn btn-danger text-white mt-5">Log in</a>
+        <a type="button" href = "/users/register" class="btn btn-danger text-white mt-5">Register</a>
+      </div>
+    </div>
+  </section>
+
+
+
+</main>
+
+<!-- Footer -->
+<footer class="bg-dark text-light py-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h5>HR Manager</h5>
+        <p>&copy; 2024 HR Manager. All Rights Reserved.</p>
+      </div>
+      <div class="col-md-6 text-end">
+        <a href="#" class="text-light me-3">Privacy Policy</a>
+        <a href="#" class="text-light">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+  function CloseMessage(){
+    document.getElementById("PleaseLogin").style.display = "none";
+    document.getElementById("Shadow").style.display = "none";
+  }
+
+  document.querySelectorAll('.saznaj-vise-btn').forEach(button => {
+    button.addEventListener('click', function() {
+      const url = this.dataset.url;
+      const userCookie = document.cookie.split('; ').find(row => row.startsWith('opkn='));
+
+      if (!userCookie) {
+        document.getElementById("Shadow").style.display = "block";
+        document.getElementById("PleaseLogin").style.display = "block";
+      } else {
+        window.location.href = url;
+      }
+    });
+  });
+
+  document.getElementById('PocetakBtn').addEventListener('click', function() {
+    const userCookie = document.cookie.split('; ').find(row => row.startsWith('opkn='));
+
+    if (!userCookie) {
+      window.location.href = '/users/login';
+    } else {
+      window.location.href = '/users/home';
+    }
+  });
+
+  const userCookie = document.cookie.split('; ').find(row => row.startsWith('opkn='));
+  if (!userCookie) {
+    document.getElementById('LogInBtn').innerHTML = 'Log in';
+  } else {
+    document.getElementById('LogInBtn').innerHTML = 'Profil';
+  }
+  document.getElementById('LogInBtn').addEventListener('click', function() {
+    const userCookie = document.cookie.split('; ').find(row => row.startsWith('opkn='));
+
+    if (!userCookie) {
+      window.location.href = '/users/login';
+    } else {
+      window.location.href = '/users/home';
+
+    }
+  });
+
+  function Nk(){
+    window.location.href="/home/nk";
+  }
+
+  function Di(){
+    window.location.href="/home/di";
+  }
+
+  function Bpk(){
+    window.location.href="/home/bpk";
+  }
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+</body>
+</html>

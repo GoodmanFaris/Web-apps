@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Human Resources Management</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<style>
+  .section-title {
+    border-bottom: 2px solid #0d6efd;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+  }
+
+  .main-info h4 {
+    margin-bottom: 10px;
+  }
+
+  .main-info h4 span {
+    font-weight: 400;
+    color: #6c757d;
+  }
+
+  .entry-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-bottom: 0;
+  }
+
+  .entry-subtitle {
+    font-size: 1rem;
+    color: #6c757d;
+    margin-bottom: 0;
+  }
+
+  .entry-dates {
+    font-size: 0.9rem;
+    color: #adb5bd;
+  }
+
+  .list-group-item {
+    border: none;
+    margin-bottom: 15px;
+    padding: 0;
+  }
+
+  .list-group {
+    padding-left: 0;
+  }
+</style>
+</head>
+<body class="bg-light text-dark">
+<header class="bg-primary text-white py-3">
+  <div class="container d-flex justify-content-between align-items-center">
+    <a href ="/admin/" style="text-decoration: none; color: white"><h1>HR Management Admin</h1></a>
+    <nav>
+      <ul class="nav">
+        <li class="nav-item"><a href="/admin/dashboard" class="nav-link text-white">Dashboard</a></li>
+        <li class="nav-item"><a href="/logout" class="nav-link text-white">Logout</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="shadow p-3 mb-5 bg-white rounded mt-5" style="width: 80%; margin-left: auto; margin-right: auto;">
+  <div class="container">
+    <h1 class="text-primary mb-4" style="font-size: 80px"><%= ime %> <%= prezime %></h1>
+
+    <!-- O meni Section -->
+    <div class="main-info mb-5">
+      <h2 class="section-title text-secondary">O meni:</h2>
+      <h4>Ime: <span><%= ime %> </span></h4>
+      <h4>Prezime: <span><%= prezime %></span></h4>
+      <h4>Email: <span><%= email %></span></h4>
+      <h4>Rodjen: <span><%= datum_rodjenja %></span></h4>
+      <h4>Adresa stanovanja: <span><%= adresa %></span></h4>
+      <h4>Biografija: <span><%= opis %></span></h4>
+    </div>
+
+    <!-- Obrazovanje Section -->
+    <div class="mb-5">
+      <h2 class="section-title text-secondary">Obrazovanje:</h2>
+      <ul class="list-group">
+        <% obrazovanje.forEach(function (item) { %>
+          <li class="list-group-item">
+            <h2 class="entry-title"><%= item.strucna_sprema %></h2>
+            <p class="entry-subtitle"><%= item.naziv_ustanove %></p>
+            <p class="entry-dates"><%= item.pocetak_pohadzanja %> - <%= item.kraj_pohadzanja %></p>
+          </li>
+        <% }); %>
+      </ul>
+    </div>
+
+
+    <!-- Radno iskustvo Section -->
+    <div class="mb-5">
+      <h2 class="section-title text-secondary">Radno iskustvo:</h2>
+      <ul class="list-group">
+        <% iskustvo.forEach(function (item) { %>
+          <li class="list-group-item">
+            <h2 class="entry-title"><%= item.naziv_kompanije %></h2>
+            <p class="entry-subtitle"><%= item.opis %></p>
+            <p class="entry-dates"><%= item.datum_pocetka %> - <%= item.datum_zavrsetka %></p>
+          </li>
+        <% }); %>
+      </ul>
+    </div>
+
+    <!-- Vjestine Section -->
+    <div class="mb-5">
+      <h2 class="section-title text-secondary">Vjestine:</h2>
+      <ul class="list-group">
+        <% vjestine.forEach(function (item) { %>
+          <li class="list-group-item">
+            <h2 class="entry-title"><%= item.naziv_vjestine %></h2>
+            <p class="entry-subtitle">Ocjena: <%= item.kolicina %></p>
+            <p class="entry-dates"><%= item.opis %></p>
+          </li>
+        <% }); %>
+      </ul>
+    </div>
+  </div>
+</div>
+<!-- Display Submitted Files Section -->
+<!-- Display Submitted Files Section -->
+<div class="container mb-5">
+  <h2 class="section-title text-secondary">Priloženi Dokumenti:</h2>
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+    <% if (files && files.cv) { %>
+      <div class="col">
+        <div class="card border-primary">
+          <div class="card-body d-flex align-items-center">
+            <i class="bi bi-file-earmark-text fs-1 text-primary me-3"></i>
+            <div>
+              <h5 class="card-title mb-0">Curriculum Vitae (CV)</h5>
+              <a href="/admin/download/<%= idKandidat %>/cv" class="btn btn-primary btn-sm mt-2">Preuzmite</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% } %>
+    <% if (files && files.mp) { %>
+      <div class="col">
+        <div class="card border-success">
+          <div class="card-body d-flex align-items-center">
+            <i class="bi bi-file-earmark-text fs-1 text-success me-3"></i>
+            <div>
+              <h5 class="card-title mb-0">Motivacijsko Pismo</h5>
+              <a href="/admin/download/<%= idKandidat %>/mp" class="btn btn-success btn-sm mt-2">Preuzmite</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% } %>
+    <% if (files && files.certifikat) { %>
+      <div class="col">
+        <div class="card border-warning">
+          <div class="card-body d-flex align-items-center">
+            <i class="bi bi-award fs-1 text-warning me-3"></i>
+            <div>
+              <h5 class="card-title mb-0">Certifikat</h5>
+              <a href="/admin/download/<%= idKandidat %>/certifikat" class="btn btn-warning btn-sm mt-2">Preuzmite</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% } %>
+    <% if (files && files.pohvale) { %>
+      <div class="col">
+        <div class="card border-info">
+          <div class="card-body d-flex align-items-center">
+            <i class="bi bi-hand-thumbs-up fs-1 text-info me-3"></i>
+            <div>
+              <h5 class="card-title mb-0">Pohvale</h5>
+              <a href="/admin/download/<%= idKandidat %>/pohvale" class="btn btn-info btn-sm mt-2 text-white">Preuzmite</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    <% } %>
+  </div>
+</div>
+
+
+
+<div class="shadow p-3 mb-5 bg-white rounded mt-5" style="width: 80%; margin-left: auto; margin-right: auto;">
+  <div class="container">
+    <!-- Existing sections here -->
+
+    <!-- Actions and Feedback Section -->
+    <div class="mb-5">
+      <h2 class="section-title text-secondary">Akcije i Povratne informacije:</h2>
+      <form action ="/admin/add_critique/<%= idUser%>/<%= konkursi[0].id%>" method = "POST">
+      <div class="row">
+        <!-- Comment Section -->
+        <div class="col-md-6 mb-4">
+          <label  for="candidateComment" class="form-label">Komentar za kandidata:</label>
+          <textarea name ="komentar" id="candidateComment" class="form-control" rows="4" placeholder="Dodajte komentar..."></textarea>
+        </div>
+
+        <!-- Rating Section -->
+        <div class="col-md-6 mb-4">
+          <label for="candidateRating" class="form-label">Ocjena kandidata:</label>
+          <input name = "ocjena" type="range" id="candidateRating" class="form-range" min="1" max="10" step="1" oninput="ratingOutput.value = this.value">
+          <div class="d-flex justify-content-between">
+            <span>1</span>
+            <span>5</span>
+            <span>10</span>
+          </div>
+          <output id="ratingOutput" class="form-text text-primary d-block text-center mt-2" style="font-size: 1.5rem;">5</output>
+        </div>
+        <button type ="submit" class="btn btn-primary" style="width: 10%; margin-left: auto; margin-right: auto;">Spasi</button>
+      </div>
+    </form>
+      <hr>
+      <!-- Action Buttons -->
+      <!-- Action Buttons -->
+      <div class="d-flex justify-content-around">
+        <button class="btn btn-danger btn-lg" onclick="Odbijen('<%= idUser %>', <%= konkursi[0].id %>);">Odbij</button>
+        <button class="btn btn-warning btn-lg" onclick="showDatePicker('<%= idUser %>', <%= konkursi[0].id %>);">Pozovi na intervju</button>
+        <button class="btn btn-info btn-lg text-white" onclick="UziIzb('<%= idUser %>', <%= konkursi[0].id %>);">Uži izbor</button>
+        <button class="btn btn-success btn-lg" onclick="Prihvacen('<%= idUser %>', <%= konkursi[0].id %>);">Prihvati</button>
+      </div>
+
+      <!-- Date Picker Modal -->
+      <div id="datePickerModal" class="modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 1050; background: white; border: 1px solid #ccc; padding: 20px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+        <h5>Izaberite datum za intervju</h5>
+        <form id="interviewForm" action="/admin/scheduleInterview/<%= idUser %>/<%= konkursi[0].id%>" method="POST">
+          <input type="hidden" name="idUser" id="idUserField">
+          <input type="hidden" name="idKonkurs" id="idKonkursField">
+          <input type="date" name="interviewDate" class="form-control mb-3" required>
+          <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-secondary me-2" onclick="closeModal();">Odustani</button>
+            <button type="submit" class="btn btn-warning">Potvrdi</button>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+</form>
+
+
+
+
+<footer class="bg-dark text-light py-4 mt-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6">
+        <h5>HR Manager</h5>
+        <p>&copy; 2024 HR Manager. All Rights Reserved.</p>
+      </div>
+      <div class="col-md-6 text-end">
+        <a href="#" class="text-light me-3">Privacy Policy</a>
+        <a href="#" class="text-light">Terms of Service</a>
+      </div>
+    </div>
+  </div>
+</footer>
+<script>
+    function showDatePicker(idUsera, idKon) {
+      // Populate hidden fields in the form
+      document.getElementById('idUserField').value = parseInt(idUsera);
+      document.getElementById('idKonkursField').value = parseInt(idKon);
+
+      // Show the modal
+      document.getElementById('datePickerModal').style.display = 'block';
+    }
+
+    function closeModal() {
+      // Hide the modal
+      document.getElementById('datePickerModal').style.display = 'none';
+    }
+
+    function Odbijen(idUsera, idKon) {
+      idUsera = parseInt(idUsera);
+      window.location.href = "/admin/statusOdbijen/" + idUsera + "/" + idKon;
+    }
+
+    function UziIzb(idUsera, idKon) {
+      idUsera = parseInt(idUsera);
+      window.location.href = "/admin/statusUziIzb/" + idUsera + "/" + idKon;
+    }
+
+    function Prihvacen(idUsera, idKon) {
+      idUsera = parseInt(idUsera);
+      window.location.href = "/admin/statusPrihvacen/" + idUsera + "/" + idKon;
+    }
+</script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

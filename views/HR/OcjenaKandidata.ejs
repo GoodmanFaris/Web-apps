@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rate Candidate</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<header class="bg-primary text-white py-3">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a href ="/HR" style="text-decoration: none; color: white"><h1>HR Management</h1></a>
+        <nav>
+            <ul class="nav">
+                <li class="nav-item"><a href="/HR/poruke/users" class="nav-link text-white">Poruke(Kandidati)</a></li>
+                <li class="nav-item"><a href="/HR/poruke/admin" class="nav-link text-white">Poruke(Admin)</a></li>
+                <li class="nav-item"><a href="/logout" class="nav-link text-white">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="container mt-5">
+    <h1 class="text-primary">Rate Candidate</h1>
+    <div class="card shadow-sm p-4">
+        <h2><%= kandidat.ime %> <%= kandidat.prezime %></h2>
+        <p><strong>Competition:</strong> <%= kandidat.naziv_konkursa %></p>
+        <p><strong>Interview Date:</strong> <%= new Date(kandidat.datum_intervijua).toISOString().slice(0, 10) %></p>
+
+        <form action="/HR/rate/<%= kid %>" method="POST" class="mt-4">
+            <div class="mb-3">
+                <label for="rating" class="form-label">Rating (1-5)</label>
+                <select id="rating" name="rating" class="form-select" required>
+                    <option value="" disabled selected>Select a rating</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="1">6</option>
+                    <option value="2">7</option>
+                    <option value="3">8</option>
+                    <option value="4">9</option>
+                    <option value="5">10</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="komentar" class="form-label">Comment</label>
+                <textarea id="komentar" name="komentar" class="form-control" rows="4"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit Rating</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

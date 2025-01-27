@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Human Resources Management</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            body {
+                background-color: #f8f9fa; /* Light grey background */
+                color: #212529; /* Dark text */
+            }
+            .container {
+                margin-top: 50px;
+            }
+            .footer {
+                margin-top: 50px;
+                text-align: center;
+                color: #6c757d;
+            }
+        </style>
+    </head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <i class="bi bi-person-badge"></i> HR Manager
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/users/contact">Kontakt</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-light" type="submit">Search</button>
+            </form>
+            <a id = "PocetakBtn" class="btn btn-light ms-3">Log In</a>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <h1 class="text-center">O projektu</h1>
+    <p class="lead text-center">Upravljanje ljudskim resursima</p>
+    <hr>
+
+    <h2>O projektu</h2>
+    <p>
+        Ova web stranica je kreirana kao dio projekta za predmet <strong>Odabrana poglavlja kompjuterskih nauka</strong>
+        na <strong>Prirodno-matematičkom fakultetu Univerziteta u Sarajevu</strong>. Cilj projekta je razviti funkcionalan
+        sistem za upravljanje ljudskim resursima, uključujući regrutaciju, selekciju kandidata i upravljanje podacima zaposlenika.
+    </p>
+
+    <h2>Funkcionalnosti</h2>
+    <ul>
+        <li>Praćenje i upravljanje kandidatima tokom procesa regrutacije</li>
+        <li>Evidencija zaposlenika i njihovih podataka</li>
+        <li>Automatizacija administrativnih zadataka</li>
+        <li>Sigurno čuvanje podataka</li>
+    </ul>
+
+    <h2>Tim</h2>
+    <p>
+        Projekt je izradio <strong>Faris Lindov</strong>, student Prirodno-matematičkog fakulteta u Sarajevu.
+        Posebna pažnja posvećena je implementaciji praktičnih rješenja i upotrebi savremenih tehnologija.
+    </p>
+
+    <h2>Ciljevi</h2>
+    <p>
+        Projekat ima za cilj:
+    </p>
+    <ul>
+        <li>Poboljšanje efikasnosti procesa upravljanja ljudskim resursima</li>
+        <li>Osiguranje transparentnosti i tačnosti u administraciji</li>
+        <li>Primjenu stečenih znanja iz kompjuterskih nauka u praktičnom kontekstu</li>
+    </ul>
+</div>
+
+<footer class="bg-dark text-light py-4 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h5>HR Manager</h5>
+                <p>&copy; 2024 HR Manager. All Rights Reserved.</p>
+            </div>
+            <div class="col-md-6 text-end">
+                <a href="#" class="text-light me-3">Privacy Policy</a>
+                <a href="#" class="text-light">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+<script>
+    document.getElementById('PocetakBtn').addEventListener('click', function() {
+        const userCookie = document.cookie.split('; ').find(row => row.startsWith('opkn='));
+
+        if (!userCookie) {
+            window.location.href = '/users/login';
+        } else {
+            window.location.href = '/users/home';
+        }
+    });
+
+    const userCookie = document.cookie.split('; ').find(row => row.startsWith('opkn='));
+    if (!userCookie) {
+        document.getElementById('PocetakBtn').innerHTML = 'Log in';
+    } else {
+        document.getElementById('PocetakBtn').innerHTML = 'Profil';s
+    }
+    document.getElementById('PocetakBtn').addEventListener('click', function() {
+        const userCookie = document.cookie.split('; ').find(row => row.startsWith('opkn='));
+
+        if (!userCookie) {
+            window.location.href = '/users/login';
+        } else {
+            window.location.href = '/users/home';
+
+        }
+    });
+
+</script>
+</body>
+</html>

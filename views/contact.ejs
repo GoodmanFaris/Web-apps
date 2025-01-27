@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt Forma</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+            <i class="bi bi-person-badge"></i> HR Manager
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/home/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/users/contact">Kontakt</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/logout">Logout</a>
+                </li>
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-light" type="submit">Search</button>
+            </form>
+            <a id="PocetakBtn" class="btn btn-light ms-3">Log In</a>
+        </div>
+    </div>
+</nav>
+<div class="container mt-5">
+    <h1 class="text-primary text-center">Kontakt Forma</h1>
+    <p class="text-center">Molimo vas da popunite formu ispod kako bismo vam mogli pomoći.</p>
+
+    <form class="mt-4" method="post" action="/users/contact/send">
+        <div class="mb-3">
+            <label for="ime" class="form-label">Ime</label>
+            <input name="ime" type="text" class="form-control" id="ime" placeholder="Unesite vaše ime" required>
+        </div>
+        <div class="mb-3">
+            <label for="prezime" class="form-label">Prezime</label>
+            <input name="prezime" type="text" class="form-control" id="prezime" placeholder="Unesite vaše prezime" required>
+        </div>
+        <div class="mb-3">
+            <label for="svrha" class="form-label">Svrha</label>
+            <select name="svrha" class="form-select" id="svrha" required>
+                <option value="" disabled selected>Odaberite svrhu</option>
+                <option value="pomoc">Pomoć</option>
+                <option value="pitanje">Pitanje</option>
+                <option value="info">Informacije</option>
+                <option value="zaposlenje">Zaposlenje</option>
+                <option value="drugo">Drugo</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="primalac" class="form-label">Primalac</label>
+            <select name="primalac" class="form-select" id="primalac" required>
+                <option value="" disabled selected>Odaberite primaoca</option>
+                <option value="admin">Admin</option>
+                <option value="hr">HR menadzer</option>
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="poruka" class="form-label">Poruka</label>
+            <textarea name="poruka" class="form-control" id="poruka" rows="5" placeholder="Unesite vašu poruku" required></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary w-100 mb-5">Pošalji</button>
+    </form>
+</div>
+<footer class="bg-dark text-light py-4 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <h5>HR Manager</h5>
+                <p>&copy; 2024 HR Manager. All Rights Reserved.</p>
+            </div>
+            <div class="col-md-6 text-end">
+                <a href="#" class="text-light me-3">Privacy Policy</a>
+                <a href="#" class="text-light">Terms of Service</a>
+            </div>
+        </div>
+    </div>
+</footer>
+<script>
+    document.getElementById('PocetakBtn').addEventListener('click', function() {
+        const userCookie = document.cookie.split('; ').find(row => row.startsWith('opkn='));
+
+        if (!userCookie) {
+            window.location.href = '/users/login';
+        } else {
+            window.location.href = '/users/home';
+        }
+    });
+
+    const userCookie = document.cookie.split('; ').find(row => row.startsWith('opkn='));
+    if (!userCookie) {
+        document.getElementById('PocetakBtn').innerHTML = 'Log in';
+    } else {
+        document.getElementById('PocetakBtn').innerHTML = 'Profil';
+    }
+    document.getElementById('PocetakBtn').addEventListener('click', function() {
+        const userCookie = document.cookie.split('; ').find(row => row.startsWith('opkn='));
+
+        if (!userCookie) {
+            window.location.href = '/users/login';
+        } else {
+            window.location.href = '/users/home';
+
+        }
+    });
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

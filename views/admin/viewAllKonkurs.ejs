@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View All Konkurs</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #e3f2fd;
+        }
+        .table {
+            background-color: #ffffff;
+        }
+        .btn-view {
+            background-color: #0d6efd;
+            color: #fff;
+        }
+        .btn-view:hover {
+            background-color: #084298;
+        }
+    </style>
+</head>
+<body>
+<header class="bg-primary text-white py-3">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a href ="/admin/" style="text-decoration: none; color: white"><h1>HR Management Admin</h1></a>
+        <nav>
+            <ul class="nav">
+                <li class="nav-item"><a href="/admin/dashboard" class="nav-link text-white">Dashboard</a></li>
+                <li class="nav-item"><a href="/logout" class="nav-link text-white">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <label for="sortOptions" class="form-label">Sortiraj po:</label>
+            <select id="sortOptions" class="form-select mb-3">
+                <option value="" selected disabled>Izaberite opciju</option>
+                <option value="naziv_kompanije" onclick="Nk();">Nazivu kompanije</option>
+                <option value="datum_isteka" onclick="Di();">Datumu isteka</option>
+                <option value="broj_prijavljenih" onclick="Bpk();">Broj prijavljenih kandidata</option>
+                <option value="broj_prijavljenih" onclick="a();">Aktivnosti</option>
+            </select>
+        </div>
+    </div>
+</div>
+<div class="container mt-5">
+    <h1 class="text-center text-primary mb-4">Pregled svih konkursa</h1>
+    <div class="table-responsive">
+        <table class="table table-striped table-hover shadow-sm rounded">
+            <thead class="table-primary">
+            <tr>
+                <th>Naziv</th>
+                <th>Naziv Kompanije</th>
+                <th>Datum Isteka</th>
+                <th>Aktivan</th>
+                <th>Akcija</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% if (konkursi.length > 0) { %>
+                <% konkursi.forEach(konkurs => { %>
+                    <tr>
+                        <td><%= konkurs.naziv %></td>
+                        <td><%= konkurs.naziv_kompanije %></td>
+                        <td><%= new Date(konkurs.datum_isteka).toLocaleDateString('en-GB') %></td>
+                        <td class="<%= konkurs.aktivan === 1 ? 'text-success' : 'text-danger' %>">
+                            <%= konkurs.aktivan === 1 ? 'Aktivan' : 'Nije aktivan' %>
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-view" href ="/admin/view/konkurs/<%= konkurs.id%>">Pogledaj</a>
+                        </td>
+                    </tr>
+                <% }); %>
+            <% } else { %>
+                <tr>
+                    <td colspan="5" class="text-center">Nema dostupnih konkursa.</td>
+                </tr>
+            <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
+<footer class="bg-dark text-white py-3 mt-5">
+    <div class="container text-center">
+        <p>&copy; 2024 Human Resource Management System. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+    function Nk(){
+        window.location.href="/admin/viewall/konkurs/nk";
+    }
+    function Di(){
+        window.location.href="/admin/viewall/konkurs/di";
+    }
+    function Bpk(){
+        window.location.href="/admin/viewall/konkurs/bpk";
+    }
+    function a(){
+        window.location.href="/admin/viewall/konkurs";
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

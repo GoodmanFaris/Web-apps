@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR Management</title>
+    <!-- Bootstrap CSS -->
+    <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+    >
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .table-wrapper {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+<header class="bg-primary text-white py-3">
+    <div class="container d-flex justify-content-between align-items-center">
+        <a href ="/HR" style="text-decoration: none; color: white"><h1>HR Management</h1></a>
+        <nav>
+            <ul class="nav">
+                <li class="nav-item"><a href="/HR/poruke/users" class="nav-link text-white">Poruke(Kandidati)</a></li>
+                <li class="nav-item"><a href="/HR/poruke/admin" class="nav-link text-white">Poruke(Admin)</a></li>
+                <li class="nav-item"><a href="/logout" class="nav-link text-white">Logout</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+<div class="container">
+    <h1 class="text-center text-primary mt-4">HR Management</h1>
+
+    <div class="table-wrapper">
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="table-primary">
+            <tr>
+                <th>#</th>
+                <th>Ime</th>
+                <th>Prezime</th>
+                <th>Konkurs</th>
+                <th>Datum Intervijua</th>
+                <th>Ocjeni</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% let today = new Date(); %>
+            <% konkursi.forEach((kandidat, index) => { %>
+                <tr>
+                    <td><%= index + 1 %></td>
+                    <td><%= kandidat.ime %></td>
+                    <td><%= kandidat.prezime %></td>
+                    <td><%= kandidat.naziv %></td>
+                    <td><%= new Date(kandidat.datum_intervijua).toISOString().slice(0, 10) %></td>
+                    <td>
+                        <% if (new Date(kandidat.datum_intervjua) <= today) { %>
+                            <form action="/HR/rate/<%= kandidat.id %>" method="POST" class="d-inline">
+                                <a type="submit" class="btn btn-primary btn-sm">Rate</a>
+                            </form>
+                        <% } else { %>
+                            <span class="text-muted"></span>
+                        <% } %>
+                    </td>
+                </tr>
+            <% }); %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
